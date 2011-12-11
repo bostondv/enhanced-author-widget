@@ -1,0 +1,15 @@
+.widget-author-bio .align-center {
+	text-align: center;
+}
+.widget-author-bio .align-left {
+	float: left;
+	margin: 0 8px 4px 0;
+}
+.widget-author-bio .align-right {
+	float: right;
+	margin: 0 0 4px 8px;
+}
+.widget-author-bio .align-right img,
+.widget-author-bio .align-left img {
+	display: block;
+}
