@@ -73,6 +73,11 @@ By default the current post author will be displayed but you can override this b
 
 == Changelog ==
 
+= 1.1 =
+
+* Bug fixes
+* Code refactoring
+
 = 1.0 =
 
 * Initial version
