@@ -3,8 +3,8 @@
 Plugin Name: Enhanced Author Widget
 Plugin URI: http://pomelodesign.com/enhanced-author-widget
 Description: Display the biographical info, gravatar, and link of any authors profile in your blogs sidebar.
-Version: 1.1
-Author: Pomelo Design Inc.
+Version: 1.1.1
+Author: Pomelo Design
 Author URI: http://pomelodesign.com/
 License: GPL2
 

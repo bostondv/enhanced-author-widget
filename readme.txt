@@ -4,7 +4,7 @@ Donate link: http://pomelodesign.com/donate/
 Tags: widget, author, bio, user, gravatar, author bio
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: trunk
+Stable tag: 1.1.1
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
