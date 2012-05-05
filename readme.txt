@@ -1,7 +1,7 @@
 === Enhanced Author Widget ===
 Contributors: bostondv
 Donate link: http://pomelodesign.com/donate/
-Tags: widget, author, bio, user, gravatarwidget, PHP Widget, link widget title
+Tags: widget, author, bio, user, gravatar, author bio
 Requires at least: 3.0
 Tested up to: 3.4
 Stable tag: trunk

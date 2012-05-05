@@ -3,7 +3,7 @@
 Plugin Name: Enhanced Author Widget
 Plugin URI: http://pomelodesign.com/enhanced-author-widget
 Description: Display the biographical info, gravatar, and link of any authors profile in your blogs sidebar.
-Version: 1.0
+Version: 1.1
 Author: Pomelo Design Inc.
 Author URI: http://pomelodesign.com/
 License: GPL2
@@ -33,52 +33,46 @@ class enhanced_author_widget extends WP_Widget {
 	function widget($args, $instance) {
 		extract( $args );	
 		
-		if ($instance['author']) {
-			global $wpdb;
-			$bio = $wpdb->get_var($wpdb->prepare("SELECT meta_value FROM wp_usermeta WHERE meta_key = 'description' AND wp_usermeta.user_id = " . $instance['author'] . ";"));
-			$author = $wpdb->get_var($wpdb->prepare("SELECT user_email FROM wp_users WHERE ID = " . $instance['author'] . ";"));
-			$display_name = $wpdb->get_var($wpdb->prepare("SELECT display_name FROM wp_users WHERE ID = " . $instance['author'] . ";"));
-			if (empty($instance['link'])) {
-				$instance['link'] = $wpdb->get_var($wpdb->prepare("SELECT user_url FROM wp_users WHERE ID = " . $instance['author'] . ";"));
-			}
+		if ( $instance['author'] != 0 ) {
+			$author_id = $instance['author'];
 		} else {
 			global $post;
-			$author = $post->post_author;
-			$bio = get_the_author_meta('description', $author);
-			$display_name = get_the_author_meta('display_name', $author);
-			if (empty($instance['link'])) {
-				$instance['link'] = get_the_author_meta('user_url', $author);
-			}
+			$author_id = $post->post_author;
 		}
 
-		if ($instance['title']) {
-			$title = esc_attr($instance['title']);
+		$author = get_userdata( $author_id );
+		$author_bio = $author->user_description;
+		$author_name = $author->display_name;
+		$author_link = get_author_posts_url( $author_id );
+
+		if ( $instance['link'] ) {
+			$link = esc_attr( $instance['link'] );
 		} else {
-			$title = $display_name;
+			$link = $author_link;
+		}
+
+		if ( $instance['title'] ) {
+			$title = esc_attr( $instance['title'] );
+		} else {
+			$title = $author_name;
 		}
 
 		echo $before_widget;
 		echo $before_title;
-		if ($instance['link']) {
-			echo '<a href="' . $instance['link'] . '">' . $title . '</a>';
-		} else {
-			echo $title;
-		}
+		echo '<a href="' . $link . '">' . $title . '</a>';
 		echo $after_title;
 		
 		if ( 'display' == $instance['gravatar'] ) {
-			$gravatar_image = get_avatar( $author, $size = $instance['gravatar_size'] );
+			$gravatar_image = get_avatar( $author_id, $size = $instance['gravatar_size'] );
 			$output = '<div class="author-grav align-' . $instance['gravatar_align'] . '">' . $gravatar_image . '</div>';
 			if ( 'yes' != $instance['only_gravatar'] ) {
-				$output .= '<p class="user-bio author-bio">' . $bio . '</p>';
+				$output .= '<p class="user-bio author-bio">' . $author_bio . '</p>';
 			}
 		} else {
-			$output .= '<p class="user-bio author-bio">' . $bio . '</p>';
+			$output .= '<p class="user-bio author-bio">' . $author_bio . '</p>';
 		}
 
-		if ($instance['link']) {
-			$output .= '<p class="read-more"><a href="' . $instance['link'] . '">' . __('Read More &rarr;') . '</a></p>';
-		}
+		$output .= '<p class="read-more"><a href="' . $link . '">' . __('Read More &rarr;') . '</a></p>';
 		
 		echo $output;
 
@@ -109,52 +103,33 @@ class enhanced_author_widget extends WP_Widget {
 		$gravatar_size = $instance['gravatar_size'];
 		$gravatar_align = $instance['gravatar_align'];
 		$only_gravatar = $instance['only_gravatar'];
-			
-			echo '<p><label for="<' . $this->get_field_id('title') . '">' . __('Custom Title:') . '
-			<input class="widefat" id="<' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" />
-			</label></p>';
-			echo '<p><label for="<' . $this->get_field_id('link') . '">' . __('Custom URL:') . '
-			<input class="widefat" id="<' . $this->get_field_id('link') . '" name="' . $this->get_field_name('link') . '" type="text" value="' . $link . '" />
-			</label></p>';
-			echo '<p><label for="<' . $this->get_field_id('author') . '">' . __('Author:') . '
-			<select id="<' . $this->get_field_id('author') . '" name="' . $this->get_field_name('author') . '" class="widefat">';
 
-			global $wpdb;
-			//This is the query to use if the blog ID is 1 or if the multi-site function is not enabled or available.
-			$simple_authors_query = $wpdb->get_results($wpdb->prepare("SELECT distinct ID,display_name FROM wp_users,wp_usermeta WHERE wp_users.ID=wp_usermeta.user_id AND wp_usermeta.meta_key='wp_user_level' AND wp_usermeta.meta_value != 0;"));
-			
-			//If the multi-site function is enabled.
-			if (function_exists('is_multisite') && is_multisite()) {
-			
-				//Get the current blog's ID.
-				$this_blog = $wpdb->blogid;
-				
-				if (1 == $this_blog) {
-					$authors = $simple_authors_query;
-				}
-				//If the blog's ID is not 1, we need a more customized query which uses the blog's ID in obtaining the authors to use for the drop-down.
-				else {
-					$authors = $wpdb->get_results($wpdb->prepare("SELECT distinct ID,display_name FROM wp_users,wp_usermeta WHERE wp_users.ID=wp_usermeta.user_id AND wp_usermeta.meta_key='wp_" . $this_blog . "_user_level' AND wp_usermeta.meta_value != 0;"));
-				}
-			}
-			// If the multi-site function is not enabled or available, there is no need to do that extra stuff above; just run the simple query.
-			else {
-				$authors = $simple_authors_query;
-			}
-			echo '<option value="">-- Post Author --</option>';
-			foreach ( $authors as $author ){
-				echo '<option value="'. $author->ID .'"';
-				if($author->ID == $instance['author']){
-					echo ' selected ';
-				}
-				echo '>'. $author->display_name . '</option>'."\n";
-			}
-			echo '</select></label></p>';
 		?>
+			
+			<p>
+				<label for="<?php echo $this->get_field_id('title'); ?>'"><?php _e('Custom Title:'); ?></label>
+				<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+			</p>
+			<p>
+				<label for="<?php echo $this->get_field_id('link'); ?>"><?php _e('Custom URL:'); ?></label>
+				<input class="widefat" id="<?php echo $this->get_field_id('link'); ?>" name="<?php echo $this->get_field_name('link'); ?>" type="text" value="<?php echo $link; ?>" />
+			</p>
+			<p>
+				<label for="<?php echo $this->get_field_id('author'); ?>"><?php _e('Author:'); ?></label>
+				<?php 
+				$args = array(
+					'show_option_all' => 'Current Post Author',
+					'id' => $this->get_field_id('author'),
+					'name' => $this->get_field_name('author'),
+					'selected' => $author
+				);
+				wp_dropdown_users( $args ); 
+				?>
+			</p>
 
 			<p>
 				<label for="<?php echo $this->get_field_id('gravatar'); ?>">
-					<input id="<?php echo $this->get_field_id('gravatar'); ?>" name="<?php echo $this->get_field_name('gravatar'); ?>" type="checkbox" value="display" <?php if($gravatar == "display") echo 'CHECKED'; ?> onchange="jQuery('div#extra-options').slideToggle()" />
+					<input id="<?php echo $this->get_field_id('gravatar'); ?>" name="<?php echo $this->get_field_name('gravatar'); ?>" type="checkbox" value="display" <?php if($gravatar == "display") echo 'CHECKED'; ?> onchange="jQuery('div#extra-options').slideToggle('fast')" />
 					<?php echo __('Display the <a href="http://gravatar.com/" title="Gravatar">Gravatar</a>'); ?>
 				</label>
 			</p>
@@ -221,7 +196,7 @@ function enhanced_author_init() {
 add_action('widgets_init', 'enhanced_author_init');
 
 function enhanced_author_widget_style() {
-	$myStyleUrl = plugins_url('enhanced-author-widget.css', __FILE__); 
+	$myStyleUrl = plugins_url('/enhanced-author-widget/enhanced-author-widget.css'); 
 	$myStyleFile = WP_PLUGIN_DIR . '/enhanced-author-widget/enhanced-author-widget.css';
 	if ( file_exists($myStyleFile) ) {
 		wp_register_style('enhanced-author-widget', $myStyleUrl);

@@ -1,3 +1,9 @@
+.widget-author-bio:before,
+.widget-author-bio:after {
+    content: "";
+    display: table;
+    clear: both;
+}
 .widget-author-bio .align-center {
 	text-align: center;
 }
