@@ -14,7 +14,7 @@ Display the biographical info, gravatar, and link of any authors profile in your
 
 This widget allows you to display the biographical info, gravatar and link of any authors profile in the sidebar. Subscribers are excluded for obvious reasons (Contributors, Authors, Editors, and Administrators are included).
 
-For support please use [github issues](https://github.com/bostondv/enhanced-text-widget/issues). Visit [our website](http://pomelodesign.com), follow [@pomelod](http://twitter.com/pomelod/) or like [on facebook](http://www.facebook.com/pomelodesign/) for updates.
+For support please use [github issues](https://github.com/bostondv/enhanced-author-widget/issues). Visit [our website](http://pomelodesign.com), follow [@pomelod](http://twitter.com/pomelod/) or like [on facebook](http://www.facebook.com/pomelodesign/) for updates.
 
 == Installation ==
 
