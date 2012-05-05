@@ -1,16 +1,32 @@
 <?php
 /*
 Plugin Name: Enhanced Author Widget
-Description: Display the "Biographical Info" and Gravatar of any author's profile in your blog's sidebar.
-Version: 0.1
-Author: Boston Dell-Vandenberg
-Author URI: http://bostondv.com/
+Plugin URI: http://pomelodesign.com/enhanced-author-widget
+Description: Display the biographical info, gravatar, and link of any authors profile in your blogs sidebar.
+Version: 1.0
+Author: Pomelo Design Inc.
+Author URI: http://pomelodesign.com/
+License: GPL2
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 class enhanced_author_widget extends WP_Widget {
 
 	function enhanced_author_widget() {
-		$widget_ops = array('classname' => 'widget-author-bio', 'description' => "Display an author's biographical info and optional Gravatar." );
+		$widget_ops = array('classname' => 'widget-author-bio', 'description' => "Display the biographical info, gravatar, and link of any authors profile." );
 		$this->WP_Widget('author_bio', 'Enhanced Author', $widget_ops);
 	}
 	
@@ -97,10 +113,10 @@ class enhanced_author_widget extends WP_Widget {
 			echo '<p><label for="<' . $this->get_field_id('title') . '">' . __('Custom Title:') . '
 			<input class="widefat" id="<' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" />
 			</label></p>';
-			echo '<p><label for="<' . $this->get_field_id('link') . '">' . __('Custom Link:') . '
+			echo '<p><label for="<' . $this->get_field_id('link') . '">' . __('Custom URL:') . '
 			<input class="widefat" id="<' . $this->get_field_id('link') . '" name="' . $this->get_field_name('link') . '" type="text" value="' . $link . '" />
 			</label></p>';
-			echo '<p><label for="<' . $this->get_field_id('author') . '">' . __('Custom Author:') . '
+			echo '<p><label for="<' . $this->get_field_id('author') . '">' . __('Author:') . '
 			<select id="<' . $this->get_field_id('author') . '" name="' . $this->get_field_name('author') . '" class="widefat">';
 
 			global $wpdb;
@@ -192,7 +208,7 @@ class enhanced_author_widget extends WP_Widget {
 					</label>
 				</p>
 			</div>
-			<br>
+			<p class="credits"><small>Developed by <a href="http://pomelodesign.com">Pomelo Design</a></small></p>
 		<?php	
 	}
 	

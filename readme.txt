@@ -1,22 +1,27 @@
 === Enhanced Author Widget ===
-Tags: widget, author, bio, user, gravatar
-Requires at least: 2.8
-Tested up to: 3.2.1
-Stable tag: 0.1
+Contributors: bostondv
+Donate link: http://pomelodesign.com/donate/
+Tags: widget, author, bio, user, gravatarwidget, PHP Widget, link widget title
+Requires at least: 3.0
+Tested up to: 3.4
+Stable tag: trunk
+License: GPL2
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Display the Biographical Info, Gravatar, and Link of any author's profile in your blog's sidebar.
+Display the biographical info, gravatar, and link of any authors profile in your blogs sidebar.
 
 == Description ==
 
-This widget allows you to display the Biographical Info, Gravatar and Link of any author's profile in the sidebar. Subscribers are excluded for obvious reasons (Contributors, Authors, Editors, and Administrators are included).
+This widget allows you to display the biographical info, gravatar and link of any authors profile in the sidebar. Subscribers are excluded for obvious reasons (Contributors, Authors, Editors, and Administrators are included).
 
-Please submit any bug reports, support questions, or requests <a href="http://bostondv.com">here</a>.
+For support please use [github issues](https://github.com/bostondv/enhanced-text-widget/issues). Visit [our website](http://pomelodesign.com), follow [@pomelod](http://twitter.com/pomelod/) or like [on facebook](http://www.facebook.com/pomelodesign/) for updates.
 
 == Installation ==
 
-1. Upload `ehanced-author-widget` to the `/wp-content/plugins/` directory.
-1. Activate the plugin through the 'Plugins -> Installed' menu in your dashboard.
-1. Add the 'Enhanced Author' Widget to your sidebar via 'Appearance -> Widgets' in your dashboard.
+1. Download and extract the zip archive
+2. Upload `ehanced-author-widget` folder to `/wp-content/plugins/`
+3. Activate the plugin through the 'Plugins' menu in WordPress
+4. Add the widget to a sidebar and configure the options as desired
 
 == Frequently Asked Questions ==
 
@@ -54,15 +59,20 @@ For the Gravatar to appear, you must have the 'Show Avatars' option under Settin
 
 By default the widget title will be the 'Display Name' of the author but you can override this by entering a value in this field.
 
-= What is the 'Custom Link'? =
+= What is the 'Custom URL'? =
 
 By default, if the author's profile has a website a link will be displayed. You can override this link to a custom url with this field.
 
-= What is the 'Custom Author'? =
+= What is the 'Author'? =
 
 By default the current post author will be displayed but you can override this by selecting an author from this drop down menu.
 
+== Screenshots ==
+
+1. Widget options
+
 == Changelog ==
 
-= 0.1 =
-* Initial commit
+= 1.0 =
+
+* Initial version
